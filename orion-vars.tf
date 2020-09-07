@@ -69,7 +69,7 @@ variable "autoscalinggrp-name" {
 
 variable "asg-lt-ami" {
  type = string
-  default = "ami-001de46ebef863068"
+  default = "ami-0d6590e0a75f44111"
 }
 variable "asg-lt-secgrp" {
  type = string
