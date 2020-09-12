@@ -20,7 +20,7 @@ resource "aws_launch_template" "asg-temp" {
 
   disable_api_termination = true
   ebs_optimized = false
-  image_id = var.asg-lt-ami
+  image_id = data.aws_ami.wp_packer_image.id      //var.asg-lt-ami
   instance_initiated_shutdown_behavior = "terminate"
   instance_type = var.instance-type
   key_name = var.key-name
@@ -43,6 +43,18 @@ resource "aws_launch_template" "asg-temp" {
   user_data = base64encode(data.template_file.db-template.rendered)
   # user_data = data.template_file.db-template.rendered
   # user_data = filebase64(var.user-data)
+}
+  data "aws_ami" "wp_packer_image" {
+    most_recent = true
 
+    filter {
+      name   = "name"
+      values = ["apache-php-wordpress-ami"]
+    }
+    filter {
+      name   = "virtualization-type"
+      values = ["hvm"]
+    }
+    owners = ["self"]
 }
 

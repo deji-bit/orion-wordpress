@@ -7,3 +7,5 @@ echo "sed -i \"s/username_here/Dadmin/\" /var/www/html/dejiblog/wp-config.php" >
 echo "sed -i \"s/password_here/Dadminadm1n/\" /var/www/html/dejiblog/wp-config.php" >> /home/ec2-user/dbscript.sh
 chmod u+x /home/ec2-user/dbscript.sh
 ./home/ec2-user/dbscript.sh
+cd /home/ec2-user/node_exporter-1.0.1.linux-amd64
+nohup ./node_exporter

@@ -67,9 +67,9 @@ variable "autoscalinggrp-name" {
   default = "wp-web-servers"
 }
 
-variable "asg-lt-ami" {
+variable "dockr-ami" {
  type = string
-  default = "ami-0d6590e0a75f44111"
+  default = "ami-09b89ad3c5769cca2"
 }
 variable "asg-lt-secgrp" {
  type = string
@@ -91,6 +91,16 @@ variable "minimum" {
   default = 1
 }
 
+variable "nat-autoscalinggrp-name" {
+ type = string
+ default = "webservers-nat"
+}
+
+variable "nat-asg-lt-ami" {
+ type = string
+ default = "ami-058f2428e3b1e8887"
+}
+
 variable "nat-image" {
  type = string
   default = "ami-058f2428e3b1e8887"
@@ -106,10 +116,16 @@ variable "instance-type" {
  default = "t2.micro"
 }
 
-# User Data
+# User Data for Launch Template
 variable "user-data" {
   #  type    = string
   default = "dbconfig.tpl"
+}
+
+# User Data for Docker
+variable "dockr-user-data" {
+  #  type    = string
+  default = "dockrinstall.tpl"
 }
 
 #variable "instance-count" {
@@ -238,10 +254,26 @@ variable "asg-instance-tag" {
  default = "wp-webervers"
 }
 
+variable "nat-autoscalinggrp-tag" {
+ type = string
+ default = "orion-natinstance-wp" 
+}
+
+variable "nat-asg-instance-tag" {
+ type = string
+ default = "wp-webervers-nat"
+}
+
 variable "orion-natinst-tag" {
  type = string
  default = "orion-natinstance-wp"
 }
+
+variable "orion-dockrinst-tag" {
+ type = string
+ default = "docker-node"
+}
+
 
 ###############################
 ####    Other Variables    ####

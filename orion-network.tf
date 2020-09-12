@@ -58,14 +58,15 @@ resource "aws_instance" "orion-nat-inst" {
   key_name               = var.key-name
   subnet_id              = aws_subnet.orion-subnetd.id
   vpc_security_group_ids = [aws_security_group.nat-inst-secgrp.id]
-  source_dest_check      = false
-#  count                  = var.instance-count
+  source_dest_check      = false    // Very important to set this for the Nat Instance to work correctly
   
   tags = {
     Name = var.orion-natinst-tag
   }
 }
+
  
+
 ###  Create 3 Private Subnets to launch our Web Servers and RDS Database in  ###
 
 ##  Subnet A
@@ -240,6 +241,15 @@ resource "aws_security_group" "asg-lt-secgrp" {
     cidr_blocks       = ["172.31.4.0/22"]
     description = "traffic allowed from sources within the network ONLY"
   }
+# Node Exporter
+  ingress {
+    from_port         = 9100
+    to_port           = 9100
+    protocol          = "tcp"
+    cidr_blocks       = ["0.0.0.0/0"]
+#    security_groups = ["sg-0d9e6fa834fc555a5"]
+    description = "traffic allowed from sources within the network ONLY"
+  }
 # SSH port
   ingress {
     from_port         = 22
@@ -293,7 +303,7 @@ resource "aws_security_group" "lb-secgrp" {
   }
 }
 
-### Create the Security Group to attach to our NAT Inshance  ###
+### Create the Security Group to attach to our NAT Instance  ###
 
 resource "aws_security_group" "nat-inst-secgrp" {
   name = "nat-secgrp"
