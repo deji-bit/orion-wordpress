@@ -9,7 +9,7 @@ pipeline {
             git 'https://github.com/deji-bit/orion-wordpress.git'
       	 }  
       }
-      stage('Provisioning' ) {
+      stage('Preparing AMI' ) {
          environment {
             AWS_ACCESS_KEY_ID     = credentials ('AWS_ACCESS_KEY_ID')
             AWS_SECRET_ACCESS_KEY = credentials ('AWS_SECRET_ACCESS_KEY')
@@ -21,7 +21,7 @@ pipeline {
             '''
       	 }  
        }
-       stage('Provisioning' ) {
+       stage('Deploying Resources' ) {
           environment {
              AWS_ACCESS_KEY_ID     = credentials ('AWS_ACCESS_KEY_ID')
              AWS_SECRET_ACCESS_KEY = credentials ('AWS_SECRET_ACCESS_KEY')
